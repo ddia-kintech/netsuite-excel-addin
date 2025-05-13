@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <title>NetSuite Import Assistant</title>
+
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+
+    <!-- Add local styles -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+        }
+        #header {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        #header img {
+            height: 32px;
+            margin-right: 10px;
+        }
+        #header h1 {
+            font-size: 18px;
+            margin: 0;
+            color: #0078d4;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #0078d4;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        .tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            margin-right: 5px;
+            border: 1px solid transparent;
+        }
+        .tab.active {
+            border: 1px solid #ddd;
+            border-bottom-color: white;
+            border-radius: 4px 4px 0 0;
+            margin-bottom: -1px;
+            font-weight: bold;
+            color: #0078d4;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0078d4;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 10px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <img src="assets/icon-32.png" alt="Logo">
+        <h1>NetSuite Import Assistant</h1>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" data-tab="login">Login</div>
+        <div class="tab" data-tab="setup">Setup</div>
+        <div class="tab" data-tab="template">Template</div>
+        <div class="tab" data-tab="import">Import</div>
+    </div>
+
+    <div id="login-tab" class="tab-content active">
+        <div class="section">
+            <h2>NetSuite Connection</h2>
+            <p>Enter your NetSuite Token-Based Authentication credentials:</p>
+            
+            <div class="form-group">
+                <label for="account-id">Account ID</label>
+                <input type="text" id="account-id" placeholder="e.g. 123456_SB1">
+            </div>
+            
+            <div class="form-group">
+                <label for="consumer-key">Consumer Key</label>
+                <input type="text" id="consumer-key" placeholder="Consumer Key / Client ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="consumer-secret">Consumer Secret</label>
+                <input type="password" id="consumer-secret" placeholder="Consumer Secret / Client Secret">
+            </div>
+            
+            <div class="form-group">
+                <label for="token-id">Token ID</label>
+                <input type="text" id="token-id" placeholder="Token ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="token-secret">Token Secret</label>
+                <input type="password" id="token-secret" placeholder="Token Secret">
+            </div>
+            
+            <button id="connect-button">Connect to NetSuite</button>
+        </div>
+    </div>
+
+    <div id="setup-tab" class="tab-content">
+        <div class="section">
+            <h2>Transaction Setup</h2>
+            
+            <div class="form-group">
+                <label for="transaction-type">Transaction Type</label>
+                <select id="transaction-type">
+                    <option value="">-- Select Type --</option>
+                    <option value="journal">Journal Entry</option>
+                    <option value="bill">Vendor Bill</option>
+                    <option value="invoice">Customer Invoice</option>
+                    <option value="purchaseorder">Purchase Order</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="subsidiary">Subsidiary</label>
+                <select id="subsidiary" disabled>
+                    <option value="">-- Select Subsidiary --</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="custom-form">Custom Form</label>
+                <select id="custom-form" disabled>
+                    <option value="">-- Select Form --</option>
+                </select>
+            </div>
+            
+            <button id="load-fields-button" disabled>Load Form Fields</button>
+        </div>
+    </div>
+
+    <div id="template-tab" class="tab-content">
+        <div class="section">
+            <h2>Template Configuration</h2>
+            
+            <div id="template-fields">
+                <p>Please complete the Setup tab first to load available fields.</p>
+            </div>
+            
+            <button id="generate-template-button" disabled>Generate Template</button>
+        </div>
+    </div>
+
+    <div id="import-tab" class="tab-content">
+        <div class="section">
+            <h2>Import Data</h2>
+            
+            <div class="form-group">
+                <label>Status</label>
+                <div id="import-status">
+                    No data ready for import. Please complete the Template tab first.
+                </div>
+            </div>
+            
+            <button id="import-button" disabled>Import to NetSuite</button>
+        </div>
+    </div>
+
+    <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <div id="loading-message">Loading...</div>
+    </div>
+
+    <div id="status-message" class="status">
+        Status: Ready
+    </div>
+
+    <script>
+        // Initialize Office JS
+        Office.onReady(function(info) {
+            // Add event listeners after Office.js is initialized
+            document.getElementById("connect-button").addEventListener("click", connectToNetSuite);
+            document.getElementById("load-fields-button").addEventListener("click", loadFormFields);
+            document.getElementById("generate-template-button").addEventListener("click", generateTemplate);
+            document.getElementById("import-button").addEventListener("click", importToNetSuite);
+            
+            // Set up tab navigation
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    activateTab(tabName);
+                });
+            });
+            
+            document.getElementById("status-message").innerHTML = 
+                "Status: Office.js initialized. Ready to connect to NetSuite.";
+        });
+        
+        function activateTab(tabName) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activate the selected tab
+            document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+        
+        function connectToNetSuite() {
+            showLoading("Connecting to NetSuite...");
+            
+            // In a real implementation, this would validate credentials and make a test connection
+            // For this GitHub Pages demo, we'll simulate a successful connection
+            
+            setTimeout(function() {
+                hideLoading();
+                
+                document.querySelector('.tab[data-tab="setup"]').classList.remove('disabled');
+                activateTab('setup');
+                
+                // Enable subsidiary dropdown (simulated)
+                const subsidiaryDropdown = document.getElementById('subsidiary');
+                subsidiaryDropdown.disabled = false;
+                
+                // Add dummy subsidiaries
+                subsidiaryDropdown.innerHTML = `
+                    <option value="">-- Select Subsidiary --</option>
+                    <option value="1">Parent Company</option>
+                    <option value="2">US Subsidiary</option>
+                    <option value="3">European Subsidiary</option>
+                `;
+                
+                document.getElementById("status-message").innerHTML = 
+                    "Status: Connected to NetSuite successfully. Please select a transaction type and subsidiary.";
+            }, 1500);
+        }
+        
+        function loadFormFields() {
+            const transactionType = document.getElementById('transaction-type').value;
+            const subsidiary = document.getElementById('subsidiary').value;
+            
+            if (!transactionType || !subsidiary) {
+                document.getElementById("status-message").innerHTML = 
+                    "Status: Please select both Transaction Type and Subsidiary.";
+                return;
+            }
+            
+            showLoading("Loading custom forms...");
+            
+            // Simulate loading custom forms
+            setTimeout(function() {
+                const customFormDropdown = document.getElementById('custom-form');
+                customFormDropdown.disabled = false;
+                
+                // Add dummy custom forms
+                customFormDropdown.innerHTML = `
+                    <option value="">-- Select Form --</option>
+                    <option value="101">Standard Journal Entry</option>
+                    <option value="102">Intercompany Journal</option>
+                    <option value="103">Adjustment Journal</option>
+                `;
+                
+                hideLoading();
+                document.getElementById("status-message").innerHTML = 
+                    "Status: Custom forms loaded. Please select a form and click 'Load Form Fields'.";
+                
+                // Enable the form fields button when a form is selected
+                customFormDropdown.onchange = function() {
+                    document.getElementById('load-fields-button').disabled = !this.value;
+                };
+            }, 1500);
+        }
+        
+        function generateTemplate() {
+            showLoading("Generating Excel template...");
+            
+            // Simulate generating a template
+            setTimeout(function() {
+                try {
+                    Excel.run(function(context) {
+                        // Get the current worksheet
+                        const sheet = context.workbook.worksheets.getActiveWorksheet();
+                        
+                        // Clear existing content
+                        sheet.getRange().clear();
+                        
+                        // Add headers
+                        const headers = ["Account", "Debit", "Credit", "Memo", "Department", "Class", "Location"];
+                        sheet.getRange("A1:G1").values = [headers];
+                        
+                        // Format headers
+                        sheet.getRange("A1:G1").format.font.bold = true;
+                        sheet.getRange("A1:G1").format.fill.color = "#D0D0D0";
+                        
+                        // Auto-fit columns
+                        sheet.getUsedRange().format.autofitColumns();
+                        
+                        return context.sync()
+                            .then(function() {
+                                hideLoading();
+                                document.getElementById("import-button").disabled = false;
+                                activateTab('import');
+                                document.getElementById("import-status").textContent = 
+                                    "Template generated. Fill in the data in Excel and then click 'Import to NetSuite'.";
+                                document.getElementById("status-message").innerHTML = 
+                                    "Status: Template generated successfully. Fill in your data in Excel.";
+                            });
+                    }).catch(function(error) {
+                        hideLoading();
+                        document.getElementById("status-message").innerHTML = 
+                            "Error: " + error.message;
+                        console.error(error);
+                    });
+                } catch (ex) {
+                    hideLoading();
+                    document.getElementById("status-message").innerHTML = 
+                        "Exception: " + ex.message;
+                    console.error(ex);
+                }
+            }, 1500);
+        }
+        
+        function importToNetSuite() {
+            showLoading("Importing data to NetSuite...");
+            
+            // In a real implementation, this would read data from Excel and send it to NetSuite
+            // For this GitHub Pages demo, we'll simulate an import process
+            
+            setTimeout(function() {
+                hideLoading();
+                document.getElementById("import-status").textContent = 
+                    "Data imported successfully to NetSuite.";
+                document.getElementById("status-message").innerHTML = 
+                    "Status: Data imported to NetSuite successfully.";
+            }, 2000);
+        }
+        
+        function showLoading(message) {
+            document.getElementById("loading-message").textContent = message || "Loading...";
+            document.getElementById("loading").style.display = "block";
+        }
+        
+        function hideLoading() {
+            document.getElementById("loading").style.display = "none";
+        }
+    </script>
+</body>
+</html>

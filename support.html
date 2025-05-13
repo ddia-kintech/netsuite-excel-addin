@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSuite Excel Add-in - Support</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #0078d4;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        h2 {
+            margin-top: 25px;
+            color: #333;
+        }
+        .support-section {
+            background-color: #f5f5f5;
+            border-left: 4px solid #0078d4;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-question {
+            font-weight: bold;
+            color: #0078d4;
+        }
+        .faq-answer {
+            margin-top: 5px;
+        }
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>NetSuite Excel Add-in - Support</h1>
+    
+    <p>Welcome to the support page for the NetSuite Excel Add-in. Here you'll find answers to common questions and troubleshooting tips.</p>
+    
+    <div class="support-section">
+        <h2>Common Issues</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">The add-in doesn't appear in Excel after installation</div>
+            <div class="faq-answer">
+                <p>Try these troubleshooting steps:</p>
+                <ol>
+                    <li>Make sure you're using a supported version of Excel (Excel 2016 or later)</li>
+                    <li>Check if the manifest XML file was properly uploaded</li>
+                    <li>Restart Excel completely</li>
+                    <li>Check if the add-in is listed under "My Add-ins" in Excel</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">I can't connect to my NetSuite account</div>
+            <div class="faq-answer">
+                <p>Verify the following:</p>
+                <ol>
+                    <li>Your NetSuite Account ID is correct (including any _SB1 suffix for sandbox)</li>
+                    <li>Your Token-Based Authentication credentials are valid</li>
+                    <li>The Integration record in NetSuite has the correct permissions</li>
+                    <li>Your role in NetSuite has appropriate permissions</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Custom forms aren't appearing in the dropdown</div>
+            <div class="faq-answer">
+                <p>This could be due to:</p>
+                <ol>
+                    <li>The selected subsidiary doesn't have custom forms assigned</li>
+                    <li>Your NetSuite role doesn't have permission to access these forms</li>
+                    <li>The forms exist but aren't available for the selected transaction type</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <h2>NetSuite Setup Instructions</h2>
+    
+    <p>To use this add-in, you'll need to set up Token-Based Authentication (TBA) in NetSuite:</p>
+    
+    <ol>
+        <li>Log in to NetSuite as an administrator</li>
+        <li>Go to Setup &gt; Integration &gt; Manage Integrations</li>
+        <li>Click "New" to create a new integration record</li>
+        <li>Enter a name (e.g., "Excel Add-in")</li>
+        <li>Check "Token-Based Authentication"</li>
+        <li>Save the record and note the Consumer Key/Secret</li>
+        <li>Go to Setup &gt; Users/Roles &gt; Access Tokens</li>
+        <li>Click "New" to create a new token</li>
+        <li>Select your user and the integration you created</li>
+        <li>Save the record and note the Token ID/Secret</li>
+    </ol>
+    
+    <div class="note">
+        <strong>Note:</strong> The Consumer Key/Secret and Token ID/Secret should never be shared. They provide access to your NetSuite account.
+    </div>
+    
+    <h2>Contact Support</h2>
+    
+    <p>If you're still experiencing issues, please contact support via the GitHub repository or contact your NetSuite administrator.</p>
+</body>
+</html>
