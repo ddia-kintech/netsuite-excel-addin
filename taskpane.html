@@ -138,31 +138,33 @@
     <div id="login-tab" class="tab-content active">
         <div class="section">
             <h2>NetSuite Connection</h2>
-            <p>Enter your NetSuite Token-Based Authentication credentials:</p>
+            <p>Account ID, Consumer Key, and Consumer Secret are pre-filled. Please verify the Token credentials:</p>
             
             <div class="form-group">
-                <label for="account-id">Account ID</label>
-                <input type="text" id="account-id" placeholder="e.g. 123456_SB1">
+                <label for="account-id">Account ID (Fixed)</label>
+                <input type="text" id="account-id" placeholder="e.g. 123456_SB1" readonly style="background-color: #f0f0f0;">
             </div>
             
             <div class="form-group">
-                <label for="consumer-key">Consumer Key</label>
-                <input type="text" id="consumer-key" placeholder="Consumer Key / Client ID">
+                <label for="consumer-key">Consumer Key (Fixed)</label>
+                <input type="text" id="consumer-key" placeholder="Consumer Key / Client ID" readonly style="background-color: #f0f0f0;">
             </div>
             
             <div class="form-group">
-                <label for="consumer-secret">Consumer Secret</label>
-                <input type="password" id="consumer-secret" placeholder="Consumer Secret / Client Secret">
+                <label for="consumer-secret">Consumer Secret (Fixed)</label>
+                <input type="password" id="consumer-secret" placeholder="Consumer Secret / Client Secret" readonly style="background-color: #f0f0f0;">
             </div>
             
             <div class="form-group">
                 <label for="token-id">Token ID</label>
                 <input type="text" id="token-id" placeholder="Token ID">
+                <small>Default value is pre-filled. Modify only if needed.</small>
             </div>
             
             <div class="form-group">
                 <label for="token-secret">Token Secret</label>
                 <input type="password" id="token-secret" placeholder="Token Secret">
+                <small>Default value is pre-filled. Modify only if needed.</small>
             </div>
             
             <button id="connect-button">Connect to NetSuite</button>
