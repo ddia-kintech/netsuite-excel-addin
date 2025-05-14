@@ -6,11 +6,11 @@ const state = {
     connected: false,
     serverUrl: 'https://workspace.djibirilgoundo.repl.co', // Your Replit server URL
     credentials: {
-        accountId: '',
-        consumerKey: '',
-        consumerSecret: '',
-        tokenId: '',
-        tokenSecret: ''
+        accountId: '8176363_SB1', // Hardcoded Account ID
+        consumerKey: 'd33cb0953bd87bd9ed7953df9fe52da5d885a99d069deda21131b9697b7d2e3a', // Hardcoded Client ID
+        consumerSecret: 'd4a2de9a8a6b35aad9b6ed162f955ba0247bffd1a38af7d9b53ee0cf3b6242f4', // Hardcoded Client Secret
+        tokenId: '4b18d0bde1ee3ae2444059a78e28d4f065807e1ca57e02895af049ced2de6aed', // Default Token ID
+        tokenSecret: 'dc2ce472e35c32a98c0a9c4e5919d323294e07fc1ced22520dd0e32ab2248b5a' // Default Token Secret
     },
     selectedSubsidiary: '',
     isBookSpecific: false,
@@ -168,7 +168,20 @@ Office.onReady(function(info) {
         // Populate transaction type dropdown with Journal Entry only for now
         document.getElementById('transaction-type').innerHTML = '<option value="journal">Journal Entry</option>';
         
-        updateStatus('Office.js initialized. Ready to connect to NetSuite.');
+        // Auto-populate the login form with hardcoded credentials
+        document.getElementById('account-id').value = state.credentials.accountId;
+        document.getElementById('account-id').disabled = true; // Make it read-only
+        
+        document.getElementById('consumer-key').value = state.credentials.consumerKey;
+        document.getElementById('consumer-key').disabled = true; // Make it read-only
+        
+        document.getElementById('consumer-secret').value = state.credentials.consumerSecret;
+        document.getElementById('consumer-secret').disabled = true; // Make it read-only
+        
+        document.getElementById('token-id').value = state.credentials.tokenId;
+        document.getElementById('token-secret').value = state.credentials.tokenSecret;
+        
+        updateStatus('Office.js initialized. Ready to connect to NetSuite. Account, Consumer Key, and Consumer Secret are pre-filled. Please verify the Token ID and Token Secret.');
     }
 });
 
@@ -190,12 +203,16 @@ function activateTab(tabName) {
 function connectToNetSuite() {
     showLoading('Connecting to NetSuite...');
     
-    // Get credentials from form
-    state.credentials.accountId = document.getElementById('account-id').value;
-    state.credentials.consumerKey = document.getElementById('consumer-key').value;
-    state.credentials.consumerSecret = document.getElementById('consumer-secret').value;
+    // Get token values from form (Account ID, Consumer Key, and Consumer Secret are hardcoded)
     state.credentials.tokenId = document.getElementById('token-id').value;
     state.credentials.tokenSecret = document.getElementById('token-secret').value;
+    
+    // Validate that token values are provided
+    if (!state.credentials.tokenId || !state.credentials.tokenSecret) {
+        hideLoading();
+        updateStatus('Please provide Token ID and Token Secret values.', true);
+        return;
+    }
     
     // Call the server to validate credentials
     fetch(`${state.serverUrl}/api/validate-credentials`, {
