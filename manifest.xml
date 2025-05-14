@@ -10,17 +10,17 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="NetSuite Import Assistant"/>
   <Description DefaultValue="Import data from Excel to NetSuite including journals, bills, invoices, and purchase orders."/>
-  <IconUrl DefaultValue="https://username.github.io/netsuite-excel-addin/assets/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://username.github.io/netsuite-excel-addin/assets/icon-64.png"/>
-  <SupportUrl DefaultValue="https://username.github.io/netsuite-excel-addin/support.html"/>
+  <IconUrl DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/assets/icon-64.png"/>
+  <SupportUrl DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/support.html"/>
   <AppDomains>
-    <AppDomain>username.github.io</AppDomain>
+    <AppDomain>ddia-kintech.github.io</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Workbook"/>
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://username.github.io/netsuite-excel-addin/taskpane.html"/>
+    <SourceLocation DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/taskpane.html"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
@@ -66,14 +66,14 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://username.github.io/netsuite-excel-addin/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://username.github.io/netsuite-excel-addin/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://username.github.io/netsuite-excel-addin/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
-        <bt:Url id="Commands.Url" DefaultValue="https://username.github.io/netsuite-excel-addin/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://username.github.io/netsuite-excel-addin/taskpane.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://ddia-kintech.github.io/netsuite-excel-addin/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with NetSuite Import Assistant"/>
