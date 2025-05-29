@@ -23,7 +23,7 @@ const state = {
         responsibilities: [], // Department in standard NetSuite
         activities: [],       // Class in standard NetSuite
         locations: [],
-        IC-Codes: [],          // Intercompany codes
+        icCodes: [],          // Intercompany codes
         accountingBooks: []
     }
 };
@@ -47,7 +47,7 @@ const templateDefinitions = {
             { id: "entity", label: "Customer", type: "dropdown", source: "customers", required: false },
             { id: "entity", label: "Vendor", type: "dropdown", source: "vendors", required: false },
             { id: "entity", label: "Employee", type: "dropdown", source: "employees", required: false },
-            { id: "IC-Code", label: "IC-Code", type: "dropdown", source: "IC-Codes", required: false },
+            { id: "iccode", label: "IC-Code", type: "dropdown", source: "icCodes", required: false },
             { id: "department", label: "Responsibility", type: "dropdown", source: "responsibilities", required: false },
             { id: "class", label: "Activity", type: "dropdown", source: "activities", required: false },
             { id: "location", label: "Location", type: "dropdown", source: "locations", required: false }
@@ -71,7 +71,7 @@ const templateDefinitions = {
             { id: "entity", label: "Customer", type: "dropdown", source: "customers", required: false },
             { id: "entity", label: "Vendor", type: "dropdown", source: "vendors", required: false },
             { id: "entity", label: "Employee", type: "dropdown", source: "employees", required: false },
-            { id: "IC-Code", label: "IC-Code", type: "dropdown", source: "IC-Codes", required: false },
+            { id: "iccode", label: "IC-Code", type: "dropdown", source: "icCodes", required: false },
             { id: "department", label: "Responsibility", type: "dropdown", source: "responsibilities", required: false },
             { id: "class", label: "Activity", type: "dropdown", source: "activities", required: false },
             { id: "location", label: "Location", type: "dropdown", source: "locations", required: false }
@@ -93,7 +93,7 @@ const templateDefinitions = {
             { id: "entity", label: "Customer", type: "dropdown", source: "customers", required: false },
             { id: "entity", label: "Vendor", type: "dropdown", source: "vendors", required: false },
             { id: "entity", label: "Employee", type: "dropdown", source: "employees", required: false },
-            { id: "IC-Code", label: "IC-Code", type: "dropdown", source: "IC-Codes", required: false },
+            { id: "iccode", label: "IC-Code", type: "dropdown", source: "icCodes", required: false },
             { id: "department", label: "Responsibility", type: "dropdown", source: "responsibilities", required: false },
             { id: "class", label: "Activity", type: "dropdown", source: "activities", required: false },
             { id: "location", label: "Location", type: "dropdown", source: "locations", required: false }
@@ -116,7 +116,7 @@ const templateDefinitions = {
             { id: "entity", label: "Customer", type: "dropdown", source: "customers", required: false },
             { id: "entity", label: "Vendor", type: "dropdown", source: "vendors", required: false },
             { id: "entity", label: "Employee", type: "dropdown", source: "employees", required: false },
-            { id: "IC-Code", label: "IC-Code", type: "dropdown", source: "IC-Codes", required: false },
+            { id: "iccode", label: "IC-Code", type: "dropdown", source: "icCodes", required: false },
             { id: "department", label: "Responsibility", type: "dropdown", source: "responsibilities", required: false },
             { id: "class", label: "Activity", type: "dropdown", source: "activities", required: false },
             { id: "location", label: "Location", type: "dropdown", source: "locations", required: false }
@@ -293,7 +293,7 @@ function loadTemplate() {
     state.masterData.responsibilities = ['Finance', 'Sales', 'Marketing', 'Operations', 'IT']; // Department in standard NS
     state.masterData.activities = ['Project A', 'Project B', 'Research', 'Development', 'Maintenance']; // Class in standard NS
     state.masterData.locations = ['Headquarters', 'Branch Office', 'Warehouse', 'Retail Store', 'Remote Office'];
-    state.masterData.IC-Codes = ['IC-001', 'IC-002', 'IC-003', 'IC-004', 'IC-005'];
+    state.masterData.icCodes = ['IC-001', 'IC-002', 'IC-003', 'IC-004', 'IC-005'];
     
     if (state.isBookSpecific) {
         state.masterData.accountingBooks = ['Primary Book', 'Secondary Book', 'Tax Book', 'IFRS Book', 'GAAP Book'];
